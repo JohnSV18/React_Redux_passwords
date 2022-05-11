@@ -1,7 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addPassword } from './actions'
+import "./Password.css"
+import zxcvbn from 'zxcvbn'
 
+const styles = {
+    button: {
+      width: '100%',
+      margin:'0.5em 0',
+      padding: '0.5em',
+      border: '4px solid #4687D3',
+      borderRadius: '6px',
+      background: '#4A90E2',
+      color: '#fff'
+    }
+}
 
 
 
@@ -26,6 +39,7 @@ function Password() {
       let newPass = pass.toString().replace(/,/g, '')
       setPassword(newPass)
       
+      console.log(zxcvbn(newPass))
       return newPass
       
     }
@@ -33,20 +47,23 @@ function Password() {
  
   return (
     <div>
-      <div>{password}</div>
+      <div><h1>{password}</h1></div>
       <div>
+          <label> Enter name: </label>
         <input
             value={name}
             onChange={(e) => setName(e.target.value)}
         />
       </div>
       <div>
+      <label> Enter description: </label>
         <input
             onChange={(e) => setDescription(e.target.value)}
             value={description}
         />
       </div> 
       <div>
+      <label> Password Generate: </label>
         <input
             onChange={(e) => setPassword(e.target.value)}
             value={password}
@@ -56,12 +73,16 @@ function Password() {
       <div>
         <button onClick={(e) => {
           generatePassword()
-        }}>Generate</button>
+        }}
+          className="button"
+        >Generate</button>
       </div>
       <div>
         <button onClick={(e) => {
             dispatch(addPassword(name, password))
-          }}>Save
+          }}
+          style={styles.button}
+        >Save
         </button>
       </div>
     </div>
